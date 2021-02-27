@@ -3,18 +3,20 @@ from bs4 import BeautifulSoup
 import pandas as pd 
 from webdriver_manager.chrome import ChromeDriverManager
 
+#adding comment
 
 def scrape():
     executable_path = {'executable_path': '/usr/local/bin/chromedriver'} 
     browser = Browser('chrome', **executable_path, headless=False)
 
-
     mars_url = 'https://mars.nasa.gov/news/'
     browser.visit(mars_url)
 
     #slow down code running
-    browser.is_element_present_by_id("at4-thankyou",wait_time=2
+    browser.is_element_present_by_id("at4-thankyou",wait_time=2)
 
+
+    #Parse Results HTML with BeautifulSoup
     html = browser.html
     news_soup = BeautifulSoup(html, "html.parser")
 
@@ -29,11 +31,9 @@ def scrape():
     mars_paragraph
 
 
-    executable_path = {'executable_path': '/usr/local/bin/chromedriver'} 
-    browser = Browser('chrome', **executable_path)
-
     jpl_url = 'https://www.jpl.nasa.gov/images?search=&category=Mars'
     browser.visit(jpl_url)
+
     #slow down site
     browser.is_element_present_by_id("__nuxt",wait_time=2)
 
@@ -46,6 +46,7 @@ def scrape():
 
     image_url
 
+
     browser.visit(image_url)
 
 
@@ -54,12 +55,9 @@ def scrape():
     mars_facts
 
 
-    # visit USGS website
-    executable_path = {'executable_path': '/usr/local/bin/chromedriver'} 
-    browser = Browser('chrome', **executable_path, headless=False)
-
     hemisphere_url = "https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars"
     browser.visit(hemisphere_url)
+
     #slow down site
     browser.is_element_present_by_id("results",wait_time=2)
 
@@ -87,17 +85,18 @@ def scrape():
         image_urls.append(hemisphere)
         
         browser.back() 
-    
+
+
     image_urls
 
-browser.quit()
+    browser.quit()
 
-scraping_components = {
+    scraping_components = {
     "mars_news": {"title" : mars_title, "paragraph": mars_paragraph},
     "jpl_image": image_url,
     "facts": mars_facts,
     "hemisphere_image_urls": image_urls
-}
+    }
 
-return scraping_components
+    return scraping_components
 
