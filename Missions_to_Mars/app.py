@@ -14,17 +14,16 @@ mongo = PyMongo(app)
 #flask routes 
 @app.route("/")
 def home():
-    # creating an object of the mars data
-    mars_data = mongo.db.collection.find_one()
+    
+    mars = mongo.db.collection.find_one()
 
-    # using render template to send bits of mars data to html template
-    return render_template('index.html', mars=mars_data)
+    return render_template('index.html', mars = mars)
 
 @app.route("/scrape")
 def scrape():
-    mars_data = scrape_mars.scrape_mars()
-
-    mongo.db.collection.update({}, mars_data, upsert=True)
+    mars = mongo.db.mars
+    mars_data = scrape_mars.scrape_all()
+    mars.update({}, mars_data, upsert=True)
     return redirect('/')
     
 if __name__ == "__main__":
